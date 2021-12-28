@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+$text = '<h1>Привет мир!</h1>';
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +13,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 Route::get('/', function () {
     return view('welcome');
 });
+*/
+
+
+/*Route::get('/', fn () => $text)*/
+
+Route::get('/', function () use ($text) {
+    return $text;
+  });
