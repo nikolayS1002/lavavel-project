@@ -14,14 +14,6 @@ $text = '<h1>Привет мир!</h1>';
 |
 */
 /*
-Route::get('/', function () {
-    return view('welcome');
-});
-*/
-
-
-/*Route::get('/', fn () => $text)*/
-/*
 Route::get('/', function () use ($text) {
     return $text;
   });
