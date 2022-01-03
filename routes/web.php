@@ -21,7 +21,19 @@ Route::get('/', function () {
 
 
 /*Route::get('/', fn () => $text)*/
-
+/*
 Route::get('/', function () use ($text) {
     return $text;
   });
+*/
+Route::get('/', function () {
+    return ('welcome');
+});
+
+Route::get('/about', function () {
+    return ('about');
+});
+
+Route::get('/news/{number}', function ($number) {
+    return ('news' + $number);
+});
