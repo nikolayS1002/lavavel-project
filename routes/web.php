@@ -1,6 +1,10 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 
 $text = '<h1>Привет мир!</h1>';
 /*
@@ -26,6 +30,18 @@ Route::get('/about', function () {
     return ('about');
 });
 
-Route::get('/news/{number}', function ($number) {
-    return ('news' + $number);
+
+//news routes
+
+//admin
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function(){
+    Route::resource('/categories', AdminCategoryController::class);
+    Route::resource('/news', AdminNewsController::class);
 });
+
+
+Route::get('/news', [NewsController::class, 'index'])
+->name('news.index');
+Route::get('news/{id}', [NewsController::class, 'show'])
+->where(['id', '\d+'])
+->name('news.show');

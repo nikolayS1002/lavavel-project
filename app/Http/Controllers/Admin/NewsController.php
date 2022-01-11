@@ -14,7 +14,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        //
+        return 'AdminNews';
     }
 
     /**
@@ -24,7 +24,9 @@ class NewsController extends Controller
      */
     public function create()
     {
-        //
+        $test = 2;
+        dd($test);
+        return "Создать новость";
     }
 
     /**
