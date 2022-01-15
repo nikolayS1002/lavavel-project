@@ -18,12 +18,13 @@ class Controller extends BaseController
 
         $news = [];
 
-        for($i = 0; $i < 10; $i++) {
+        for($i = 0; $i < 20; $i++) {
             $news[] = [
                 'id' => $i,
                 'title' => $faker->jobTitle(),
                 'description' => $faker->text(250),
                 'author' => $faker->userName(),
+                'category' => $this->getAllCategories()[rand(0,4)],
             ];
         }
 
@@ -38,6 +39,20 @@ class Controller extends BaseController
             'title' => $faker->jobTitle(),
             'description' => $faker->text(250),
             'author' => $faker->userName(),
+            'category' => $this->getAllCategories()[rand(0,4)],
         ];
+    }
+
+    public function getAllCategories() : array
+    {
+        $categories = [
+            ['id' => 0, 'category' => 'наука'],
+            ['id' => 1, 'category' => 'культура'],
+            ['id' => 2, 'category' => 'спорт'],
+            ['id' => 3, 'category' => 'политика'],
+            ['id' => 4, 'category' => 'экономика'],
+        ];
+
+        return $categories;
     }
 }
