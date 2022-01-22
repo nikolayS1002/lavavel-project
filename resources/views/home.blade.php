@@ -12,6 +12,7 @@
 @section('content')
     <h5><a href="{{ route('news.index') }}">Новости</h5></a><br>
     <h5><a href="{{ route('news.categories') }}">Категории новостей</a></h5><br>
+    <h5><a href="{{ route('about') }}">О нас</a></h5><br>
     <p><a href="{{ route('news.add') }}"><button>Добавить новость</button></a></p><br>
 @endsection
 

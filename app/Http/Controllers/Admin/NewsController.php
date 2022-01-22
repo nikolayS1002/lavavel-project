@@ -24,9 +24,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $test = 2;
-        dd($test);
-        return "Создать новость";
+        return view('admin.news.create');
     }
 
     /**
@@ -37,7 +35,10 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => ['required']
+        ]);
+        dump($request->all());
     }
 
     /**

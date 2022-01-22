@@ -24,7 +24,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return 'Создали новость';
+        return view('admin.categories.create');
     }
 
     /**
@@ -35,7 +35,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => ['required']
+        ]);
+        dump($request->all());
     }
 
     /**

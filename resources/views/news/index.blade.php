@@ -7,6 +7,7 @@
         <div class="col-lg-6 col-md-8 mx-auto">
             <h1 class="fw-light">Список Новостей</h1>
         </div>
+{{--        <div><br><a href="{{ route('news.add') }}"><button>Добавить новость</button></a></div>--}}
     </div>
 @endsection
 @section('content')
