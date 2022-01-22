@@ -8,8 +8,11 @@
             <a href="{{ route('admin.categories.create') }}"
                type="button" class="btn btn-sm btn-outline-secondary">Добавить категорию</a>
         </div>
+    </div>
 @endsection
 
 @section('content')
+            <div class="table-responsive">
 
+            </div>
 @endsection

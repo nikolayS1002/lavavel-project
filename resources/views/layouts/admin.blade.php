@@ -37,10 +37,8 @@
                 @yield('header')
             </div>
 
+            @yield('content')
 
-            <div class="table-responsive">
-                @yield('content')
-            </div>
         </main>
     </div>
 </div>

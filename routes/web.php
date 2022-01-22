@@ -25,11 +25,9 @@ Route::get('/', function () use ($text) {
   });
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
-Route::get('/about', function () {
-    return ('about');
-});
-
+Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::post('/about/feedback', [HomeController::class, 'feedback'])->name('about.feedback.store');
+Route::post('/about/data', [HomeController::class, 'data'])->name('about.data.store');
 
 //news routes
 
@@ -41,16 +39,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function(){
 });
 
 
-
+Route::get('/news/add', [NewsController::class, 'add'])
+    ->name('news.add');
 Route::get('/news/categories', [CategoryController::class, 'index'])
     ->name('news.categories');
 Route::get('/news/categories/{category}', [CategoryController::class, 'getNewsByCategory'])
     ->name('news.category')
     ->where(['category', '\d+']);
-Route::get('/news', [NewsController::class, 'index'])
+Route::get('/newss', [NewsController::class, 'index'])
     ->name('news.index');
-Route::get('/news/add', [NewsController::class, 'add'])
-    ->name('news.add');
 Route::get('news/{id}', [NewsController::class, 'show'])
     ->where(['id', '\d+'])
     ->name('news.show');
