@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\News;
 use Faker\Factory;
 use Illuminate\Http\Request;
 
@@ -9,7 +11,8 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = $this->getAllCategories();
+        $model = new Category();
+        $categories = $model->getCategories();
 
         return view('news.categories', [
             'categories' => $categories
@@ -18,13 +21,10 @@ class CategoryController extends Controller
 
     public function getNewsByCategory($categoryId)
     {
-        $news = $this->getNews();
-        $categoryNews = [];
-        foreach ($news as $value){
-            if ($value['category']['id'] == $categoryId) {
-                $categoryNews[] = $value;
-            }
-        }
+        $categoryNews= \DB::table('news')
+            ->select()
+            ->where('category_id', '=', $categoryId)
+            ->get();
 
         return view('news.category', [
             'categoryNews' => $categoryNews

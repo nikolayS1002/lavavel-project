@@ -25,8 +25,8 @@
 
             <div class="card-body">
                 <div class="card-header">
-                    <h5><a href="{{ route('news.category', ['category' => $categoryItem['id']]) }}">
-                            {{ $categoryItem['category'] }}</a></h5>
+                    <h5><a href="{{ route('news.category', ['category' => $categoryItem->id]) }}">
+                            {{ $categoryItem->title }}</a></h5>
                 </div>
             </div>
         </div>
