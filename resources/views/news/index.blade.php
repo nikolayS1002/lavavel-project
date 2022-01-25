@@ -13,7 +13,7 @@
 @section('content')
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-        @forelse($news as $newsItem)
+        @forelse($newsList as $news)
 
             <div class="col">
                 <div class="card shadow-sm">
@@ -27,15 +27,15 @@
                     <div class="card-body">
                         <div class="card-header">
                             <strong><a
-                                    href="{{ route('news.show', ['id' => $newsItem['id']]) }}">{{ $newsItem['title']  }}</a></strong>
+                                    href="{{ route('news.show', ['id' => $news->id]) }}">{{ $news->title }}</a></strong>
                         </div>
-                        <div class="card-title">
-                            Категория: <a
-                                href="{{ route('news.category', ['category' => $newsItem['category']['id']]) }}">
-                                {{ $newsItem['category']['category'] }}</a>
-                        </div>
-                        <p class="card-text">{{$newsItem['description'] }}</p>
-                        <small class="text-muted">Автор: {{ $newsItem['author'] }}</small>
+{{--                        <div class="card-title">--}}
+{{--                            Категория: <a--}}
+{{--                                href="{{ route('news.category', ['category' => $newsItem['category']['id']]) }}">--}}
+{{--                                {{ $newsItem['category']['category'] }}</a>--}}
+{{--                        </div>--}}
+                        <p class="card-text">{{ $news->description }}</p>
+                        <small class="text-muted">Автор: {{ $news->author }}</small>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Смотреть подробнее
