@@ -49,6 +49,14 @@ Route::get('/news/categories/{category}', [CategoryController::class, 'getNewsBy
 Route::get('/newss', [NewsController::class, 'index'])
     ->name('news.index');
 Route::get('news/{id}', [NewsController::class, 'show'])
-    ->where(['id', '\d+'])
+    ->where(['news', '\d+'])
     ->name('news.show');
+
+Route::get('/collection', function () {
+    $array = ['Anna', 'Victor', 'Alexey', 'Dima', 'Ira', 'Vasya', 'Olya'];
+    $collection = collect($array);
+    dd($collection->map(function ($item) {
+        return mb_strtolower($item);
+    })->sort());
+});
 
