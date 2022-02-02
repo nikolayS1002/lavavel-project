@@ -11,20 +11,20 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $model = new Category();
-        $categories = $model->getCategories();
+        $categories = Category::with('news')->paginate(3);
 
         return view('news.categories', [
             'categories' => $categories
         ]);
     }
 
-    public function getNewsByCategory($categoryId)
+    public function getNewsByCategory($id)
     {
-        $categoryNews= \DB::table('news')
-            ->select()
-            ->where('category_id', '=', $categoryId)
-            ->get();
+        $categoryNews= News::query()->select(
+            News::$availableFields
+        )
+            ->where('category_id', '=', $id)
+            ->paginate(6);
 
         return view('news.category', [
             'categoryNews' => $categoryNews
