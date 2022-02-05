@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Category\CreateRequest;
+use App\Http\Requests\Category\EditRequest;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
@@ -35,10 +37,10 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CreateRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
         $request->validate([
             'title' => ['required']
@@ -85,11 +87,11 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param $category
+     * @param EditRequest $request
+     * @param Category $category
      * @return void
      */
-    public function update(Request $request, Category $category)
+    public function update(EditRequest $request, Category $category)
     {
             $updated = $category->fill($request->only(['title', 'description']))
                 ->save();
@@ -111,6 +113,11 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        try{
+            $category->delete();
+            return response()->json('ok');
+        }catch (\Exception $e) {
+            \Log::error("Error delete news item");
+        }
     }
 }

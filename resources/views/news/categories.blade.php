@@ -25,7 +25,7 @@
 
             <div class="card-body">
                 <div class="card-header">
-                    <h5><a href="{{ route('news.category', ['category' => $categoryItem->id]) }}">
+                    <h5><a href="{{ route('news.category', $categoryItem->id, ['id' => $categoryItem->id]) }}">
                             {{ $categoryItem->title }}</a></h5>
                 </div>
             </div>
@@ -35,6 +35,7 @@
     @empty
     <h3>Новостей нет</h3>
     @endforelse
+        {{ $categories->links() }}
 </div>
 @endsection
 
