@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>@section('title') Страница сайта @show</title>
 
-    <!-- Bootstrap core CSS -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
     <style>
@@ -47,5 +47,8 @@
         integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
         crossorigin="anonymous"></script>
 <script src="{{ asset('js/dashboard.js') }}"></script>
+
+@stack('js')
+
 </body>
 </html>
