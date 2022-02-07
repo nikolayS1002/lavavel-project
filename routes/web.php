@@ -5,10 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 
-$text = '<h1>Привет мир!</h1>';
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,12 +20,13 @@ $text = '<h1>Привет мир!</h1>';
 | contains the "web" middleware group. Now create something great!
 |
 */
-/*
-Route::get('/', function () use ($text) {
-    return $text;
-  });
-*/
-Route::get('/', [HomeController::class, 'index'])->name('home');
+
+//$text = '<h1>Привет мир!</h1>';
+//Route::get('/', function () use ($text) {
+//    return $text;
+//  });
+
+Route::get('/', [HomeController::class, 'index'])->name('start');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::post('/about/feedback', [HomeController::class, 'feedback'])->name('about.feedback.store');
 Route::post('/about/data', [HomeController::class, 'data'])->name('about.data.store');
@@ -32,12 +34,27 @@ Route::post('/about/data', [HomeController::class, 'data'])->name('about.data.st
 //news routes
 
 //admin
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function(){
-    Route::view('/', 'admin.index')->name('index');
-    Route::resource('/categories', AdminCategoryController::class);
-    Route::resource('/news', AdminNewsController::class);
-});
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/account', AccountController::class)
+        ->name('account');
 
+    Route::get('/account/logout', function () {
+        \Auth::logout();
+        return redirect()->route('login');
+    })->name('account.logout');
+
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
+        Route::view('/', 'admin.index')->name('index');
+        Route::match(['post', 'get'], '/profile/update', [AdminProfileController::class, 'update'])
+        ->name('profile.update');
+        Route::get('/profile', [AdminProfileController::class, 'index'])
+        ->name('profile.index');
+        Route::get('/profile/edit/{user}', [AdminProfileController::class, 'edit'])
+        ->name('profile.edit');
+        Route::resource('/categories', AdminCategoryController::class);
+        Route::resource('/news', AdminNewsController::class);
+    });
+});
 
 Route::get('/news/add', [NewsController::class, 'add'])
     ->name('news.add');
@@ -60,3 +77,16 @@ Route::get('/collection', function () {
     })->sort());
 });
 
+
+Route::get('/session', function () {
+    if (session()->has('title')) {
+//        dd(session()->all(), session()->get('title'));
+        session()->forget('title');
+    }
+
+    session(['title' => 'name']);
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

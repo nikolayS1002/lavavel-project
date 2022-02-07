@@ -6,36 +6,23 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function index()
     {
         return view('home');
-    }
-
-    public function about()
-    {
-        return view('about');
-    }
-
-
-    public function feedback(Request $request)
-    {
-        $request->validate([
-            'name' => ['required']
-        ]);
-        dump($request->all());
-    }
-
-    public function data(Request $request)
-    {
-        $request->validate([
-            'name' => ['required']
-        ]);
-        $data = $request->except(['_token']);
-        dump($data);
-
-        file_put_contents('files/document.txt', $data,FILE_APPEND | LOCK_EX);
-
-        $newData = file_get_contents('files/document.txt', True);
-        dump($newData);
     }
 }
