@@ -3,8 +3,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\CategoryController;
+use \App\Http\Controllers\SocialController;
 use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
@@ -44,6 +46,8 @@ Route::group(['middleware' => 'auth'], function () {
     })->name('account.logout');
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
+        Route::get('/parser', ParserController::class)
+            ->name('parser');
         Route::view('/', 'admin.index')->name('index');
         Route::match(['post', 'get'], '/profile/update', [AdminProfileController::class, 'update'])
         ->name('profile.update');
@@ -90,3 +94,17 @@ Route::get('/session', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/admins', function () {
+    $users = \App\Models\User::query()->admins()->get();
+    dd($users);
+});
+
+Route::group(['middleware' => 'guest', 'prefix' => 'auth', 'as' => 'social.'], function () {
+
+    Route::get('/{network}/redirect', [SocialController::class, 'redirect'])
+    ->name('redirect');
+
+    Route::get('/{network}/callback', [SocialController::class, 'callback'])
+    ->name('callback');
+});
