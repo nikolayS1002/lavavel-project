@@ -19,6 +19,7 @@
                 <th>Имя</th>
                 <th>e-mail</th>
                 <th>Статус</th>
+                <th>Заходил последний раз</th>
                 <th>Опции</th>
             </tr>
             </thead>
@@ -29,6 +30,7 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->is_admin }}</td>
+                    <td>{{ $user->last_login_at }}</td>
                     <td><a href="{{ route('admin.profile.edit', ['user' => $user->id]) }}">Ред.</a>
                         &nbsp;
                         <a href="javascript:;" class="delete" rel="{{ $user->id }}" style="color: red;">Уд.</a></td>
