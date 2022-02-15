@@ -21,7 +21,7 @@ class SocialService implements Social
     public function loginUser(BaseContract $socialUser, string $network): string
     {
         $user = User::where('email', $socialUser->getEmail())->first();
-        if ($user) {
+        if ($user) { // update
             $user->name = $socialUser->getName();
             $user->avatar = $socialUser->getAvatar();
 
@@ -29,12 +29,23 @@ class SocialService implements Social
                 \Auth::loginUsingId($user->id);
                 return route('account');
             } else {
-                // register here
-                return route('register');
+                // register
+                $user = User::create([
+                    'name' => $socialUser->getName(),
+                    'name' => $socialUser->getEmail(),
+                    'avatar' => $socialUser->getAvatar(),
+                    'password' => 12345678
+                ]);
+                if ($user){
+                    Auth::login($user);
+                    return route('account');
+                } else {
+                    return route('register');
+                }
+
             }
 
             throw new \Exception("You get error with network: " . $network);
-            return '123';
         }
     }
 }

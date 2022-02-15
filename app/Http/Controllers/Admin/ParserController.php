@@ -16,34 +16,21 @@ class ParserController extends Controller
     {
         $loaded = $service->load('https://news.yandex.ru/politics.rss')
                     ->start();
-        dd($loaded['title']);
-                   
-        // News::create([
-        //     'title' => $request->get('title'),
-        //     'description' => $request->get('display_name'),
-        //     'description' => $request->get('description'),
-        // ]);
 
-        $created = News::create([
-            'title' => $loaded['news'][0]['title'],
-            'slug' => $loaded['news'][0]['link'],
-            'description' => $loaded['news'][0]['description'],
-            'category_id' => $loaded['title'],
-        ]);
+        foreach ($loaded['news'] as $news) {
+            News::Parse($news, 4);
 
-        if($created) {
-            dd('Created!');
-        } else {
-            dd('Не удалось добавить запись');
+//            News::create($news + [
+//                    'category_id' => 4,
+//                    'slug' => $news['link'],
+//                ]);
+//
+//            if($created) {
+//                dump('Created!');
+//            } else {
+//                dd('Не удалось добавить запись');
+//            }
         }
 
-
-        
-        $created = News::create(
-            $request->validated() + [
-                'slug' => \Str::slug($request->input('title'))
-            ]
-        );
-        
     }
 }

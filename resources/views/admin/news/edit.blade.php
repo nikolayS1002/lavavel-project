@@ -13,7 +13,7 @@
 @section('content')
     <div>
         @include('inc.message')
-        <form method="post" action="{{ route('admin.news.update', ['news' => $news]) }}">
+        <form method="post" action="{{ route('admin.news.update', ['news' => $news]) }}" enctype="multipart/form-data">
             @csrf
             @method('put')
             <div class="form-group">
@@ -46,6 +46,13 @@
                 @error('status') <strong style="color: red">{{ $message }}</strong> @enderror
             </div>
             <div class="form-group">
+                <label for="image">Изображение</label>
+{{--                {{ get file link }}--}}
+                <img src="{{ Storage::disk('public')->url($news->image) }}" alt="" style="width: 250px;">
+                &nbsp; <a href="javascript:;">[X]</a>
+                <input type="file" class="form-control" id="image" name="image">
+            </div>
+            <div class="form-group">
                 <label for="description">Описание</label>
                 <textarea class="form-control" name="description" id="description" required>
                     {!!  $news->description !!}
@@ -57,3 +64,13 @@
         </form>
     </div>
 @endsection
+<x-editor></x-editor>
+{{--@push('js')--}}
+{{--    <script>--}}
+{{--        ClassicEditor--}}
+{{--            .create( document.querySelector( '#description' ) )--}}
+{{--            .catch( error => {--}}
+{{--                console.error( error );--}}
+{{--            } );--}}
+{{--    </script>--}}
+{{--@endpush--}}

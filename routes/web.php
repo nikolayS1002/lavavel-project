@@ -6,7 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\CategoryController;
-use \App\Http\Controllers\SocialController;
+use App\Http\Controllers\SocialController;
 use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
@@ -69,9 +69,9 @@ Route::get('/news/categories/{category}', [CategoryController::class, 'getNewsBy
     ->where(['category', '\d+']);
 Route::get('/news', [NewsController::class, 'index'])
     ->name('news.index');
-Route::get('news/{id}', [NewsController::class, 'show'])
-    ->where(['news', '\d+'])
-    ->name('news.show');
+Route::get('/news/{news}', [NewsController::class, 'show'])
+	->where('news', '\d+')
+	->name('news.show');
 
 Route::get('/collection', function () {
     $array = ['Anna', 'Victor', 'Alexey', 'Dima', 'Ira', 'Vasya', 'Olya'];
