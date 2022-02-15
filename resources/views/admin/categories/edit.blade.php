@@ -31,3 +31,4 @@
         </form>
     </div>
 @endsection
+<x-editor></x-editor>

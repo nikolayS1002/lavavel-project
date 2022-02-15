@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,10 +10,10 @@ use PhpParser\Builder;
 
 class News extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable;
 
     public static $availableFields = [
-        'id', 'title', 'author', 'status', 'description', 'created_at'
+        'id', 'title', 'author', 'status', 'image', 'description', 'created_at'
     ];
     protected $table = 'news';
 
@@ -23,6 +24,7 @@ class News extends Model
         'author',
         'status',
         'description',
+        'image',
     ];
 
     public function category(): BelongsTo
@@ -52,4 +54,12 @@ class News extends Model
     }
   */
 
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
+    }
 }

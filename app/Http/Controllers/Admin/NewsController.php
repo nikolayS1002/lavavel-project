@@ -7,6 +7,7 @@ use App\Http\Requests\News\CreateRequest;
 use App\Http\Requests\News\EditRequest;
 use App\Models\Category;
 use App\Models\News;
+use App\Services\UploadService;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -65,6 +66,18 @@ class NewsController extends Controller
             ->withInput();
     }
 
+    public function Parse($news, $category_id){
+        $created = News::create($news + [
+                'category_id' => $category_id,
+            ]);
+
+        if($created) {
+                dump('Created!');
+            } else {
+                dd('Не удалось добавить запись');
+            }
+    }
+
     /**
      * Display the specified resource.
      *
@@ -100,9 +113,11 @@ class NewsController extends Controller
      */
     public function update(EditRequest $request, News $news)
     {
-        $updated = $news->fill($request->validated() + [
-                'slug' => \Str::slug($request->input('title'))
-            ])->save();
+        $validated = $request->validated();
+        if ($request->hasFile('image')) {
+            $validated['image'] = app(UploadService::class)->start($request->file('image'));
+        }
+        $updated = $news->fill($validated)->save();
 
 
 
